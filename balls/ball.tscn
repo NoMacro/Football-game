@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://plhwa4ue1tv5"]
+
+[ext_resource type="Script" uid="uid://doena023uydmo" path="res://balls/ball.gd" id="1_ht7ih"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_dk0jc"]
+radius = 0.11
+height = 0.22
+radial_segments = 16
+rings = 8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ht7ih"]
+radius = 0.11
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ht7ih"]
+size = Vector3(0.5, 0.2, 0.5)
+
+[node name="ball" type="CharacterBody3D" unique_id=1578066945]
+collision_layer = 4
+script = ExtResource("1_ht7ih")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1103809579]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.055159345, 0)
+mesh = SubResource("SphereMesh_dk0jc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=211666318]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.055, 0)
+shape = SubResource("SphereShape3D_ht7ih")
+
+[node name="PlayerDetect" type="Area3D" parent="." unique_id=1926540107]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerDetect" unique_id=1517365536]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("BoxShape3D_ht7ih")
+
+[connection signal="body_entered" from="PlayerDetect" to="." method="PlayerDetected"]
