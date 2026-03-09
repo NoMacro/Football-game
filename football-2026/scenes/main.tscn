@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://bqtvmaih7kk6j"]
+
+[ext_resource type="Script" uid="uid://2oou342tl8n" path="res://scripts/main.gd" id="1_o5qli"]
+
+[node name="Main" type="Control" unique_id=1471521053]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_o5qli")
+
+[node name="CurrentModule" type="Control" parent="." unique_id=714544706]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="OverlayLayer" type="CanvasLayer" parent="." unique_id=1768957992]
+
+[node name="FadeRect" type="ColorRect" parent="OverlayLayer" unique_id=691131361]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)

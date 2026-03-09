@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bnetphnvob8d6"]
+
+[ext_resource type="Texture2D" uid="uid://c3gxjmcbk5vtj" path="res://assets/menu/backgrounds/MainMenuScreen.png" id="1_rs0ey"]
+
+[node name="MainMenuScreen" type="Control" unique_id=1108852376]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2079424977]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_rs0ey")
+metadata/_edit_use_anchors_ = true
