@@ -43,19 +43,25 @@ func shoot(vel: Vector3):
 		velocity += player.direction * 30
 		#velocity = vel
 		player = null
-		PrevPlayer = null
+		#PrevPlayer = null
 		$MonitoringTimer.start()
 
 func PlayerDetected(body: CharacterBody3D) -> void:
 	#Player is trying to get the ball
 	#if a player just got the ball there is a cooldown before anyone else can take it from himdswwwwwwwww
-	if $MonitoringTimer.time_left == 0 and body != PrevPlayer:
+	if $MonitoringTimer.time_left == 0:
 		$MonitoringTimer.start()
 		player = body
+	
+		if PrevPlayer:
+			#if someone else gets the ball, control that other player and put the previous player in idle
+			PrevPlayer.controlled = false
+			PrevPlayer.velocity = Vector3.ZERO
+	
 		PrevPlayer = body
-		print("cought the ball")
+		body.controlled = true
 
 
 func _on_monitoring_timer_timeout() -> void:
+	#Ball stays for atlest 2 sec (timer ends) untill another player can take itsd
 	$PlayerDetect.monitoring = true
-	PrevPlayer = null
