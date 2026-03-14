@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://5umi1ldypbld"]
+
+[ext_resource type="Texture2D" uid="uid://c3gxjmcbk5vtj" path="res://assets/menu/backgrounds/MainMenuScreen.png" id="1_cvqdl"]
+[ext_resource type="Script" uid="uid://clveq76ckq40b" path="res://scripts/editor_main.gd" id="1_fx16i"]
+
+[node name="EditorMain" type="Control" unique_id=235108006]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fx16i")
+
+[node name="Background" type="TextureRect" parent="." unique_id=519252214]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_cvqdl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=663627529]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -83.5
+offset_top = -154.0
+offset_right = 83.5
+offset_bottom = 154.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Players" type="Button" parent="VBoxContainer" unique_id=361831104]
+layout_mode = 2
+text = "PLAYERS"
+
+[node name="Teams" type="Button" parent="VBoxContainer" unique_id=1589130604]
+layout_mode = 2
+text = "TEAMS"
+
+[node name="Transfers" type="Button" parent="VBoxContainer" unique_id=1540494477]
+layout_mode = 2
+text = "TRANSFERS"
+
+[node name="Nationals" type="Button" parent="VBoxContainer" unique_id=880276589]
+layout_mode = 2
+text = "NATIONALS"
+
+[node name="Cups" type="Button" parent="VBoxContainer" unique_id=1605277665]
+layout_mode = 2
+text = "CUPS"
+
+[node name="Leagues" type="Button" parent="VBoxContainer" unique_id=1914879949]
+layout_mode = 2
+text = "LEAGUES"
+
+[node name="Career" type="Button" parent="VBoxContainer" unique_id=1102637210]
+layout_mode = 2
+text = "CAREER"
+
+[node name="Back" type="Button" parent="VBoxContainer" unique_id=1443588187]
+layout_mode = 2
+text = "BACK"
+
+[connection signal="mouse_entered" from="VBoxContainer/Players" to="." method="_on_players_mouse_entered"]
+[connection signal="mouse_entered" from="VBoxContainer/Teams" to="." method="_on_teams_mouse_entered"]
+[connection signal="mouse_entered" from="VBoxContainer/Transfers" to="." method="_on_transfers_mouse_entered"]
+[connection signal="mouse_entered" from="VBoxContainer/Nationals" to="." method="_on_nationals_mouse_entered"]
+[connection signal="mouse_entered" from="VBoxContainer/Cups" to="." method="_on_cups_mouse_entered"]
+[connection signal="mouse_entered" from="VBoxContainer/Leagues" to="." method="_on_leagues_mouse_entered"]
+[connection signal="mouse_entered" from="VBoxContainer/Career" to="." method="_on_career_mouse_entered"]
+[connection signal="mouse_entered" from="VBoxContainer/Back" to="." method="_on_back_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]
