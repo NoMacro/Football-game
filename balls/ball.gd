@@ -2,11 +2,13 @@ extends CharacterBody3D
 
 const SPEED = 10
 const FRICTION = 7
+const DistanceInfrontPlayer = 0.8
 
-const SHOOTSPEED = 30
+const SHOOTSPEED = 25
 const PASSSPEED = 20
 
 var direction = Vector3.ZERO
+var PositionInfrontPlayer = Vector3.ZERO
 
 var player = null
 var PrevPlayer = null
@@ -29,13 +31,19 @@ func _physics_process(delta: float) -> void:
 
 func FollowPlayer():
 		#Puts the ball .8 meters infront of the player
+		PositionInfrontPlayer = player.position + (player.direction * DistanceInfrontPlayer)
 		if player.velocity:
 			#if the player is moving then put the ball infront of him
-			direction = ((player.position + (player.direction * 0.8)) - position).normalized()
+			#direction = ((player.position + (player.direction * DistanceInfrontPlayer)) - position).normalized()
+			direction = position.direction_to(PositionInfrontPlayer)
 			velocity = direction * SPEED
 		else:
 			#otherwise stop the ball
-			velocity = Vector3.ZERO
+			if position.distance_to(PositionInfrontPlayer) > 0.1:
+				direction = position.direction_to(PositionInfrontPlayer)
+				velocity = direction * SPEED
+			else:
+				velocity = Vector3.ZERO
 
 func CheckInput():
 	if Input.is_action_just_pressed("shoot"):
@@ -48,6 +56,8 @@ func shoot(vel: Vector3):
 		velocity += player.direction * SHOOTSPEED
 		#velocity = vel
 		player = null
+		Globals.PlayerWithBall = null
+
 		#PrevPlayer = null
 		$MonitoringTimer.start()
 
@@ -62,6 +72,7 @@ func PassBall(vel: Vector3, dir: Vector3):
 			velocity += position.direction_to(p.position).normalized() * PASSSPEED
 			##velocity = vel
 			player = null
+			Globals.PlayerWithBall = null
 			##PrevPlayer = null
 			$MonitoringTimer.start()
 
@@ -72,13 +83,22 @@ func PlayerDetected(body: CharacterBody3D) -> void:
 		$MonitoringTimer.start()
 		player = body
 	
-		if PrevPlayer:
-			#if someone else gets the ball, control that other player and put the previous player in idle
-			PrevPlayer.controlled = false
-			PrevPlayer.velocity = Vector3.ZERO
-	
-		PrevPlayer = body
-		body.controlled = true
+		if !body.away:
+			Globals.ControlledPlayer.controlled = false
+
+			if PrevPlayer:
+				#if someone else gets the ball, control that other player and put the previous player in idle
+				PrevPlayer.controlled = false
+				PrevPlayer.velocity = Vector3.ZERO
+		
+			PrevPlayer = body
+			Globals.PlayerWithBall = body
+			Globals.ControlledPlayer = body
+			Globals.BallIsHome = true
+			body.controlled = true
+
+		else:
+			Globals.BallIsHome = false
 
 
 func _on_monitoring_timer_timeout() -> void:

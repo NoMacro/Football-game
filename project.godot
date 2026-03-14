@@ -15,6 +15,10 @@ run/main_scene="uid://de7nexw8cnf0y"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Globals="*uid://bb5gyb51q4k81"
+
 [display]
 
 window/size/viewport_width=1280
@@ -61,8 +65,9 @@ pass={
 
 [layer_names]
 
-3d_physics/layer_2="players"
+3d_physics/layer_2="home"
 3d_physics/layer_3="ball"
+3d_physics/layer_4="away"
 
 [physics]
 
