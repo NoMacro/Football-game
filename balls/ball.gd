@@ -3,6 +3,9 @@ extends CharacterBody3D
 const SPEED = 10
 const FRICTION = 7
 
+const SHOOTSPEED = 30
+const PASSSPEED = 20
+
 var direction = Vector3.ZERO
 
 var player = null
@@ -14,7 +17,7 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor() and velocity.y:
 		velocity.y = 0
 	elif !is_on_floor():
-		velocity.y += get_gravity().y
+		velocity.y += get_gravity().y * delta
 
 	if player:
 		FollowPlayer()
@@ -37,14 +40,30 @@ func FollowPlayer():
 func CheckInput():
 	if Input.is_action_just_pressed("shoot"):
 		shoot(Vector3.ZERO)
+	if Input.is_action_just_pressed("pass"):
+		PassBall(Vector3.ZERO, Vector3.ZERO)
 
 func shoot(vel: Vector3):
 	if player.controlled:
-		velocity += player.direction * 30
+		velocity += player.direction * SHOOTSPEED
 		#velocity = vel
 		player = null
 		#PrevPlayer = null
 		$MonitoringTimer.start()
+
+#Will work on passing later 
+func PassBall(vel: Vector3, dir: Vector3):
+	if player.controlled:
+		#if someone is conrolling the ball
+		var p = player.FindPlayerToPass()
+		#find the player to pass to
+		if p:
+			#get the direction to player and pass 
+			velocity += position.direction_to(p.position).normalized() * PASSSPEED
+			##velocity = vel
+			player = null
+			##PrevPlayer = null
+			$MonitoringTimer.start()
 
 func PlayerDetected(body: CharacterBody3D) -> void:
 	#Player is trying to get the ball

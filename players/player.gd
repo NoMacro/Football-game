@@ -7,6 +7,8 @@ var RotationSpeed = 20
 var direction = Vector3(0, 0, -1)
 var InputDirection = Vector3(0, 0, -1)
 
+
+
 @export var controlled: bool = false
 
 func _ready() -> void:
@@ -17,6 +19,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if controlled:
 		LookForInput()
+		
 
 	#make sure player is on floor other wise gravity does its work :D
 	if is_on_floor() and velocity.y:
@@ -26,6 +29,21 @@ func _physics_process(delta: float) -> void:
 	
 	
 	move_and_slide()
+
+func FindPlayerToPass():
+	print("Passing the ball")
+	var PlayersInfrontOfMe = null
+	var DirectionCounter = -2
+	var ComparedDirection = -2
+
+	for p in get_parent().get_children():
+		if p.controlled == false and position.distance_to(p.position) < 35:
+			ComparedDirection = direction.dot(position.direction_to(p.position).normalized())
+			if ComparedDirection > DirectionCounter:
+				DirectionCounter = ComparedDirection
+				PlayersInfrontOfMe = p
+
+	return PlayersInfrontOfMe
 
 func LookForInput():
 	#look for movement keys
