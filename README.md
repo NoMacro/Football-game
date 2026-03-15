@@ -1,5 +1,16 @@
 # Football-game
 
+3/15/2026 
+
+Features Added:
+-Now the AI is Smarter, it will pass the ball to the nearest team member if anyone from the other team is attacking 
+and close enough
+
+Planned:
+-Organize the project files and put everything in its own folder
+-Add menus
+-Replace placeholder models with actual available models
+
 3/15/2026
 Bug Fixes:
 -Camera shaking
