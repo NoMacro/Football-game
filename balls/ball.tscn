@@ -34,7 +34,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 shape = SubResource("BoxShape3D_ht7ih")
 
 [node name="MonitoringTimer" type="Timer" parent="." unique_id=801873758]
-wait_time = 0.5
+wait_time = 0.1
 one_shot = true
 
 [connection signal="body_entered" from="PlayerDetect" to="." method="PlayerDetected"]

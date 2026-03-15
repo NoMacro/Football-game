@@ -27,6 +27,9 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity = velocity.move_toward(Vector3(0, velocity.y, 0), FRICTION * delta)
 
+	Globals.PrevPlayerWithBall = PrevPlayer
+	Globals.PlayerWithBall = player
+
 	move_and_slide()
 
 func FollowPlayer():
@@ -48,33 +51,31 @@ func FollowPlayer():
 func CheckInput():
 	if Input.is_action_just_pressed("shoot"):
 		shoot(Vector3.ZERO)
-	if Input.is_action_just_pressed("pass"):
-		PassBall(Vector3.ZERO, Vector3.ZERO)
+	if Input.is_action_just_pressed("pass") and Globals.BallIsHome and Globals.PlayerWithBall:
+		PassBall(20)
+		print("Passing")
 
 func shoot(vel: Vector3):
 	if player.controlled:
 		velocity += player.direction * SHOOTSPEED
 		#velocity = vel
 		player = null
-		Globals.PlayerWithBall = null
 
 		#PrevPlayer = null
 		$MonitoringTimer.start()
 
 #Will work on passing later 
-func PassBall(vel: Vector3, dir: Vector3):
-	if player.controlled:
-		#if someone is conrolling the ball
-		var p = player.FindPlayerToPass()
-		#find the player to pass to
-		if p:
-			#get the direction to player and pass 
-			velocity += position.direction_to(p.position).normalized() * PASSSPEED
-			##velocity = vel
-			player = null
-			Globals.PlayerWithBall = null
-			##PrevPlayer = null
-			$MonitoringTimer.start()
+func PassBall(PassPower):
+	#if someone is conrolling the ball
+	var p = player.FindPlayerToPass()
+	#find the player to pass to
+	if p:
+		#get the direction to player and pass 
+		velocity += position.direction_to(p.position).normalized() * PASSSPEED
+		##velocity = vel
+		player = null
+		##PrevPlayer = null
+		$MonitoringTimer.start()
 
 func PlayerDetected(body: CharacterBody3D) -> void:
 	#Player is trying to get the ball
@@ -82,7 +83,8 @@ func PlayerDetected(body: CharacterBody3D) -> void:
 	if $MonitoringTimer.time_left == 0:
 		$MonitoringTimer.start()
 		player = body
-	
+		PrevPlayer = body
+
 		if !body.away:
 			Globals.ControlledPlayer.controlled = false
 
@@ -91,8 +93,6 @@ func PlayerDetected(body: CharacterBody3D) -> void:
 				PrevPlayer.controlled = false
 				PrevPlayer.velocity = Vector3.ZERO
 		
-			PrevPlayer = body
-			Globals.PlayerWithBall = body
 			Globals.ControlledPlayer = body
 			Globals.BallIsHome = true
 			body.controlled = true

@@ -1,6 +1,11 @@
 extends Node
 
+var HomePlayers: Node3D = null
+var AwayPlayers: Node3D = null
+
 var PlayerWithBall: CharacterBody3D = null
+var PrevPlayerWithBall: CharacterBody3D = null
+
 var ControlledPlayer: CharacterBody3D = null
 var ball: CharacterBody3D = null
 var BallIsHome = true

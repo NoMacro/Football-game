@@ -4,6 +4,8 @@ const CameraSpeed = 15
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Globals.HomePlayers = $home
+	Globals.AwayPlayers = $away
 	Globals.ball = $ball
 
 
@@ -13,7 +15,7 @@ func _process(delta: float) -> void:
 	$Camera3D.position = $Camera3D.position.move_toward(
 		Vector3($ball.position.x, $Camera3D.position.y, $Camera3D.position.z), CameraSpeed * delta)
 	$Camera3D.look_at($ball.position)
-	
+	$Camera3D.rotation.x = clamp($Camera3D.rotation.x, deg_to_rad(-60), deg_to_rad(60))
 
 func _input(event):
 	#esc button quits the game
@@ -36,7 +38,7 @@ func _input(event):
 				ControlledPlayer = p
 			
 		for p in $home.get_children():
-			if p.controlled == false and position.distance_to(p.position) < 35:
+			if p.controlled == false:
 				ComparedDirection = ControlledPlayer.direction.dot(position.direction_to(p.position).normalized())
 				if ComparedDirection > DirectionCounter:
 					DirectionCounter = ComparedDirection
